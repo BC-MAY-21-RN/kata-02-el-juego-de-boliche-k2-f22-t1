@@ -9,27 +9,83 @@ class JuegoDeBolos {
     get score(){
         let score = 0
         let numRoll = 0
+        let turno = 1
 
         for(let f=0; f<10; f++){
 
-            let totalPuntos = this.rolls[numRoll] + this.rolls[numRoll+1]
-            score += totalPuntos;
+            if(this.rolls[numRoll] === 10 && turno <10){
+                score += 10+this.rolls[numRoll+1]+this.rolls[numRoll+2]
+                numRoll++;
+                turno++
+                continue;
+            } 
+            else {
+
+            let rondaPuntos = this.rolls[numRoll] + this.rolls[numRoll+1]
+
+            if( rondaPuntos === 10 && turno <10){
+                score += 10 + this.rolls[numRoll+2]
+                turno++
+
+            } else{
+                if (this.rolls[numRoll] === 10 && turno === 10 ){
+                    score += 10+this.rolls[numRoll+1]+this.rolls[numRoll+2] 
+
+                } 
+
+                if  (this.rolls[numRoll+1] === 10 && turno === 10 ) {
+                    score += 10+this.rolls[numRoll+1]
+                } 
+                
+                if (this.rolls[numRoll+2] === 10 && turno === 10 ) {
+                    score += this.rolls[numRoll]
+                }
+
+                score += rondaPuntos
+                turno++
+            }
             numRoll+=2
         }
-        return score
+    }
+    return score
     }
 }
 
 let juego = new JuegoDeBolos();
-for(let i=0; i<20;i++){
+/*  for(let i=0; i<20;i++){
 juego.roll(0)
-}
+}*/
+
+juego.roll(10)
+juego.roll(10)
+juego.roll(10)
+juego.roll(10)
+juego.roll(10)
+juego.roll(10)
+juego.roll(10)
+juego.roll(10)
+juego.roll(10)
+juego.roll(10)
+
+/*juego.roll(4)
+juego.roll(4)
+juego.roll(5)
+juego.roll(6)
+juego.roll(4)
+juego.roll(5)
+juego.roll(5)
+juego.roll(10)
+juego.roll(0)
+juego.roll(1)
+juego.roll(7)
+juego.roll(3)
+juego.roll(6)
+juego.roll(4)
+juego.roll(10)
+juego.roll(2)
+juego.roll(8)
+juego.roll(6)*/
+/* juego.roll(4)
+juego.roll(5) */
+
 console.log(juego.score)
-
-
-/* The game consists of 10 frames as shown above. In each frame the player has two opportunities to knock down 10 pins. The score for the frame is the total number of pins knocked down, plus bonuses for strikes and spares.
-
-A spare is when the player knocks down all 10 pins in two tries. The bonus for that frame is the number of pins knocked down by the next roll. So in frame 3 above, the score is 10 (the total number knocked down) plus a bonus of 5 (the number of pins knocked down on the next roll.)
-A strike is when the player knocks down all 10 pins on his first try. The bonus for that frame is the value of the next two balls rolled.
-
-In the tenth frame a player who rolls a spare or strike is allowed to roll the extra balls to complete the frame. However no more than three balls can be rolled in tenth frame. */
